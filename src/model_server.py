@@ -10,7 +10,7 @@ tokenizer = None
 
 def load_model():
     global model, tokenizer
-    model_name = "meta-llama/Meta-Llama-3-8B"
+    model_name = "meta-llama/Meta-Llama-3.1-70BB"
     
     print("Loading model...")
     bnb_config = BitsAndBytesConfig(
