@@ -1,8 +1,9 @@
+import os
 import imaplib
 import email
 from email.header import decode_header
-import os
 from dotenv import load_dotenv
+from bs4 import BeautifulSoup
 
 # Load environment variables
 load_dotenv()
@@ -36,13 +37,32 @@ def fetch_emails(num_emails=10):
                     subject = subject.decode(encoding or "utf-8")
                 sender = email_message["From"]
                 body = ""
+                
+                # Check if email is multipart
                 if email_message.is_multipart():
                     for part in email_message.walk():
-                        if part.get_content_type() == "text/plain":
+                        content_type = part.get_content_type()
+                        content_disposition = str(part.get("Content-Disposition"))
+
+                        # Extract plain text part
+                        if content_type == "text/plain" and "attachment" not in content_disposition:
                             body = part.get_payload(decode=True).decode()
+                        # Extract HTML part and convert to text
+                        elif content_type == "text/html":
+                            html_content = part.get_payload(decode=True).decode()
+                            soup = BeautifulSoup(html_content, "html.parser")
+                            body = soup.get_text()
+
+                # If the email is not multipart, handle as a single part
                 else:
-                    body = email_message.get_payload(decode=True).decode()
-                
+                    content_type = email_message.get_content_type()
+                    if content_type == "text/plain":
+                        body = email_message.get_payload(decode=True).decode()
+                    elif content_type == "text/html":
+                        html_content = email_message.get_payload(decode=True).decode()
+                        soup = BeautifulSoup(html_content, "html.parser")
+                        body = soup.get_text()
+
                 emails.append({"subject": subject, "sender": sender, "body": body})
 
     mail.close()
