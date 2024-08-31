@@ -15,7 +15,7 @@ def setup_llama_model():
     model = AutoModelForCausalLM.from_pretrained(
         model_name,
         quantization_config=bnb_config,
-        device_map="auto",
+        device_map="auto",  # This automatically handles device placement
         trust_remote_code=True
     )
     
