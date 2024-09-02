@@ -1,4 +1,7 @@
 .env
+
+src/archived/
+
 email_summaries.db
 __pycache__/
 *.py[cod]
