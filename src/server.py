@@ -7,6 +7,10 @@ app = Flask(__name__)
 # Load the model and tokenizer during server startup
 tokenizer, model = setup_llama_model()
 
+@app.route('/', methods=['GET'])
+def home():
+    return "Hello, World!"
+
 @app.route('/summarize', methods=['POST'])
 def summarize():
     email_content = request.json
