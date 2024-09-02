@@ -17,5 +17,11 @@ def summarize():
     summary = summarize_email(email_content, tokenizer, model)
     return jsonify({"summary": summary})
 
+@app.route('/message', methods=['POST'])
+def message():
+    message = request.json
+    response = parse_message(message, tokenizer, model)
+    return response
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
