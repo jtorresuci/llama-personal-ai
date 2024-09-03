@@ -22,8 +22,9 @@ def setup_llama_model():
     model = AutoModelForCausalLM.from_pretrained(
         model_name,
         quantization_config=bnb_config,
-        device_map="auto",  # This automatically handles device placement
-        trust_remote_code=True
+        device_map="auto",
+        trust_remote_code=True,
+        max_memory={0: "10GB", "cpu": "16GB"}  # Adjust these values based on your system
     )
     
     return tokenizer, model

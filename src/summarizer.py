@@ -19,7 +19,7 @@ def summarize_email(email_content, tokenizer, model):
     
     full_output = tokenizer.decode(outputs[0], skip_special_tokens=True)
     print("Full output from model:")
-    print(full_output)
+    # print(full_output)
     print("-" * 50)
     
     # Extract only the generated summary, not the entire prompt
