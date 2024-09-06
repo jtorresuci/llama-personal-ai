@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from model_setup import setup_llama_model
+from model_server.model_setup import setup_llama_model
 from parse_prompt import parse_prompt
 import logging
 
