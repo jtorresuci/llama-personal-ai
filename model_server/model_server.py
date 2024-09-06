@@ -3,6 +3,7 @@ from model_server.model_setup import setup_llama_model
 from parse_prompt import parse_prompt
 import logging
 
+
 app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG)
 

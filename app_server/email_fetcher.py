@@ -26,9 +26,12 @@ def fetch_emails(num_emails=10):
     _, message_numbers = mail.search(None, "ALL")
     email_ids = message_numbers[0].split()
 
+    # Get the fetch command from environment variable, default to "(RFC822)" if not set
+    fetch_command = os.getenv("EMAIL_FETCH_COMMAND", "(RFC822)")
+
     emails = []
     for num in email_ids[-num_emails:]:  # Get the last num_emails
-        _, msg = mail.fetch(num, "(RFC822)")
+        _, msg = mail.fetch(num, fetch_command)
         for response in msg:
             if isinstance(response, tuple):
                 email_message = email.message_from_bytes(response[1])
