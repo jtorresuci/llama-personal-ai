@@ -1,5 +1,4 @@
 import torch
-from email_fetcher import fetch_emails
 import requests
 
 def parse_prompt(prompt, tokenizer, model):    
