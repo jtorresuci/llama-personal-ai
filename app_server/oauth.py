@@ -4,12 +4,13 @@ from googleapiclient.discovery import build
 import os
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Change this to a random secret key
-os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'  # Allow HTTP for local testing
+app.secret_key = os.environ['FLASK_SECRET_KEY']  # Set this in Heroku environment variables
 
-# Replace with your client ID and client secret
-CLIENT_SECRETS_FILE = "./credentials.json"
-SCOPES = ['https://www.googleapis.com/auth/calendar']
+CLIENT_SECRETS_FILE = os.environ['GOOGLE_CLIENT_SECRETS']
+SCOPES = [
+    'https://www.googleapis.com/auth/calendar',
+    'https://www.googleapis.com/auth/gmail.readonly'  # Added email API scope
+]
 
 @app.route('/')
 def index():
