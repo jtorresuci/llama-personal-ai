@@ -2,9 +2,15 @@ from flask import Flask, redirect, request, session, url_for
 from google_auth_oauthlib.flow import Flow
 from googleapiclient.discovery import build
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file for local development
+load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = os.environ['FLASK_SECRET_KEY']  # Set this in Heroku environment variables
+app.secret_key = os.environ['FLASK_SECRET_KEY']  # This will work for both local and Heroku
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'  # Allow HTTP for local testing
+
 
 CLIENT_SECRETS_FILE = os.environ['GOOGLE_CLIENT_SECRETS']
 SCOPES = [
